@@ -1,0 +1,122 @@
+###ControllerVariables controller.yaml configuration##################################################################
+
+ExternalNetworkVlanID_controller: 41
+InternalApiNetworkVlanID_controller: 44
+StorageNetworkVlanID_controller: 46
+StorageMgmtNetworkVlanID_controller: 45
+TenantNetworkVlanID_controller: 43
+ManagementNetworkVlanID_controller: 4090
+ExternalInterfaceDefaultRoute_controller: '10.64.108.57'
+ControlPlaneSubnetCidr_controller: 26
+name1_controller: nic3
+name2_controller: nic2
+
+###ComputeVariables compute.yaml configuration############################################################################
+#
+InternalApiNetworkVlanID_compute: 44
+StorageNetworkVlanID_compute: 46
+TenantNetworkVlanID_compute: 43
+ManagementNetworkVlanID_compute: 4090
+ControlPlaneSubnetCidr_compute: 26
+ExternalInterfaceDefaultRoute_compute: '10.64.108.57'
+name1_compute: nic1
+name2_compute: nic2
+
+
+####        Network Environment Configuration
+#################################################################################
+# CIDR subnet mask length for provisioning network
+
+ControlPlaneSubnetCidr_networkenv: 100
+ControlPlaneDefaultRoute_networkenv: 172.16.72.2
+EC2MetadataIp_networkenv: 172.16.72.2
+
+# Customize the IP subnets to match the local environment
+InternalApiNetCidr_networkenv: 172.16.73.0/24
+StorageNetCidr_networkenv: 172.16.76.0/24
+StorageMgmtNetCidr_networkenv: 172.16.75.0/24
+TenantNetCidr_networkenv: 172.16.74.0/24
+ExternalNetCidr_networkenv: 10.64.105.0/25
+# Customize the VLAN IDs to match the local environment
+InternalApiNetworkVlanID_networkenv: 21
+StorageNetworkVlanID_networkenv: 24
+StorageMgmtNetworkVlanID_networkenv: 23
+TenantNetworkVlanID_networkenv: 22
+ExternalNetworkVlanID_networkenv: 25
+# Customize the IP ranges on each network to use for static IPs and VIPs
+InternalApiAllocationPools_networkenv: [{ 'start': '172.16.73.20', 'end': '172.16.73.200' }]
+InternalApiAllocationPools_start: 172.16.73.20
+InternalApiAllocationPools_end: 172.16.73.200
+
+StorageAllocationPools_networkenv: [{ 'start': '172.16.76.20', 'end': '172.16.76.200' }]
+StorageAllocationPools_start: 172.16.76.20
+StorageAllocationPools_end: 172.16.76.200
+
+StorageMgmtAllocationPools_networkenv: [{' start': '172.16.75.20', 'end': '172.16.75.200' }]
+StorageMgmtAllocationPools_start: 172.16.75.20
+StorageMgmtAllocationPools_end: 172.16.75.200
+
+TenantAllocationPools_networkenv: [{ 'start': '172.16.74.20', 'end': '172.16.74.200' }]
+TenantAllocationPools_start: 172.16.74.20
+TenantAllocationPools_end: 172.16.74.200
+
+# Leave room if the external network is also used for floating IPs
+ExternalAllocationPools_networkenv: [{ 'start': '10.64.105.10', 'end': '10.64.105.110' }]
+ExternalAllocationPools_start: 10.64.105.10
+ExternalAllocationPools_end: 10.64.105.110
+# Gateway router for the external network
+ExternalInterfaceDefaultRoute_networkenv: 10.64.105.1
+# Define the DNS servers (maximum 2) for the overcloud nodes
+DnsServers_networkenv: ["172.16.56.142","8.8.8.8"]
+DnsServers_start: 172.16.56.142
+DnsServers_end: 8.8.8.8
+# The tunnel type for the tenant network (vxlan or gre). Set to '' to disable tunneling
+NeutronTunnelTypes_networkenv: 'vxlan'
+# Customize bonding options, e.g. "mode=4 lacp_rate=1 updelay=1000 miimon=100"
+BondInterfaceOvsOptions_networkenv: "bond_mode=active-backup"
+
+#############################################External.yaml configuration#######################################################
+
+ExternalNetCidr_default: 10.64.108.56/29
+ExternalAllocationPools_start1: 10.64.108.59
+ExternalAllocationPools_end1: 10.64.108.62
+ExternalInterfaceDefaultRoute_default: 10.64.108.57
+
+############################################Internal_api.yaml configuration###################################################
+
+InternalApiNetCidr_default: 172.16.78.128/28
+InternalApiAllocationPools_start1: 172.16.78.130
+InternalApiAllocationPools_end1: 172.16.78.140
+
+###########################################storage_mgmt.yaml configuration###################################################
+
+StorageMgmtNetCidr_default: 172.16.78.144/28
+StorageMgmtAllocationPools_start1: 172.16.78.146
+StorageMgmtAllocationPools_end1: 172.16.78.156
+
+##########################################storage.yaml configuration#########################################################
+
+StorageNetCidr_default: 172.16.78.160/28
+StorageAllocationPools_start1: 172.16.78.162
+StorageAllocationPools_end1: 172.16.78.170
+
+##########################################tenant.yaml configuration#########################################################
+
+TenantNetCidr_default: 172.16.78.64/26
+TenantAllocationPools_start1: 172.16.78.66
+TenantAllocationPools_end1: 172.16.78.100
+
+#########################################noop.yaml configuration###############################################################
+
+ControlPlaneSubnetCidr_default: 26
+#########################################Defining scale of nodes###############################################################
+
+control_scale: 1
+compute_scale: 1
+
+
+########################################End of this file################################################################### 
+
+
+
+

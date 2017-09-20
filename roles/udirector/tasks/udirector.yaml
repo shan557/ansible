@@ -1,0 +1,77 @@
+  - name: Configuring the Director
+    copy: remote_src=true src=/usr/share/instack-undercloud/undercloud.conf.sample dest=/home/stack/undercloud.conf owner=stack group=stack
+
+  - name: Configuring undercloud.conf
+    lineinfile: dest=/home/stack/undercloud.conf regexp={{ item.regexp }} line={{ item.line}} state=present
+    with_items:
+     - { regexp: "#undercloud_hostname" ,line: "undercloud_hostname=ucloudgurgaon.jiolabs.com" }
+     - { regexp: "#local_ip" , line: "local_ip=172.16.78.2/26" }
+     - { regexp: "#network_gateway", line: "network_gateway=172.16.78.1" }
+     - { regexp: "#undercloud_public_vip", line: "undercloud_public_vip=172.16.78.3" }
+     - { regexp: "#undercloud_admin_vip", line: "undercloud_admin_vip=172.16.78.4" }
+     - { regexp: "#local_interface", line: "local_interface=eno2" }
+     - { regexp: "#network_cidr", line: "network_cidr=172.16.78.0/26" }
+     - { regexp: "#dhcp_start", line: "dhcp_start=172.16.78.42" }
+     - { regexp: "#dhcp_end", line: "dhcp_end=172.16.78.62" }
+     - { regexp: "#inspection_interface", line: "inspection_interface=br-ctlplane" }
+     - { regexp: "#inspection_iprange", line: "inspection_iprange=172.16.78.31,172.16.78.41" }
+     - { regexp: "#undercloud_debug ", line: "undercloud_debug=true" }
+     - { regexp: "#enable_tempest ", line: "enable_tempest=true" }
+     - { regexp: "#enable_mistral ", line: "enable_mistral=true" }
+     - { regexp: "#enable_zaqar ", line: "enable_zaqar=true" }
+     - { regexp: "#enable_telemetry", line: "enable_telemetry=true" }
+     - { regexp: "#enable_ui ", line: "enable_ui=true" }
+     - { regexp: "#enable_validations", line: "enable_validations=true" }
+     - { regexp: "#ipxe_enabled", line: "ipxe_enabled=true" }
+     - { regexp: "#store_events", line: "store_events=true" }
+     - { regexp: "#undercloud_db_password", line: "undercloud_db_password=reliance123" }
+     - { regexp: "#undercloud_admin_password", line: "undercloud_admin_password=reliance123" }
+     - { regexp: "#undercloud_glance_password", line: "undercloud_glance_password=reliance123" }
+     - { regexp: "#undercloud_heat_password", line: "undercloud_heat_password=reliance123" }
+     - { regexp: "#undercloud_neutron_password", line: "undercloud_neutron_password=reliance123" }
+     - { regexp: "#undercloud_nova_password", line: "undercloud_nova_password=reliance123" }
+     - { regexp: "#undercloud_ironic_password", line: "undercloud_ironic_password=reliance123" }
+     - { regexp: "#undercloud_aodh_password", line: "undercloud_aodh_password=reliance123" }
+     - { regexp: "#undercloud_ceilometer_password", line: "undercloud_ceilometer_password=reliance123" }
+     - { regexp: "#undercloud_ceilometer_snmpd_password", line: "undercloud_ceilometer_snmpd_password=reliance123" }
+     - { regexp: "#undercloud_swift_password", line: "undercloud_swift_password=reliance123" }
+     - { regexp: "#undercloud_mistral_password", line: "undercloud_mistral_password=reliance123" }
+     - { regexp: "#undercloud_rabbit_password", line: "undercloud_rabbit_password=reliance123" }
+     - { regexp: "#undercloud_heat_stack_domain_admin_password", line: "undercloud_heat_stack_domain_admin_password=reliance123" }
+     - { regexp: "#undercloud_sensu_password", line: "undercloud_sensu_password=reliance123" }
+     - { regexp: "#undercloud_haproxy_stats_password", line: "undercloud_haproxy_stats_password=reliance123" }
+     - { regexp: "#undercloud_zaqar_password", line: "undercloud_zaqar_password=reliance123" }
+
+  - name: generating the certificate
+    command: openssl genrsa -out /home/stack/privkey.pem 2048
+  - command: openssl req -new -x509 -key privkey.pem -out cacert.pem -subj "/C=IN/ST=HR/L=GUR/O=IT/CN=172.16.78.3" -days 365
+  - shell: cat cacert.pem privkey.pem > undercloud.pem
+  - file: name=/etc/pki/instack-certs state=directory
+    become: true
+  - command: "{{ item }}" 
+    with_items:
+    - "cp undercloud.pem /etc/pki/instack-certs"
+    - 'semanage fcontext -a -t etc_t "/etc/pki/instack-certs(/.*)?"'
+    - "restorecon -R /etc/pki/instack-certs"
+    become: true
+  - name: Install UnderCloud Finally 
+    command: openstack undercloud install
+  - name: making source permanent for stackrc
+    lineinfile: dest=/home/stack/.bash_profile line="source ~/stackrc"
+
+  - name: making source permanent for stackrc
+    lineinfile: dest=/home/stack/.bash_profile line="source ~/stackrc"
+
+  - name: output for neutron subnet-list
+    shell:  source /home/stack/stackrc && neutron subnet-list | awk '{print $2}' | egrep -v 'id|^$'
+    register: id
+
+  - name: print output for neutron subnet-list
+    debug: msg={{ id.stdout }}
+  - name: Register with nameserver
+    shell: source /home/stack/stackrc && neutron subnet-update {{ id.stdout }} --dns-nameserver 172.16.56.142
+
+  - name: Neutron Subnet show to check the DNS entry
+    shell: source /home/stack/stackrc && neutron subnet-show {{ id.stdout }}
+
+

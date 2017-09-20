@@ -1,0 +1,11 @@
+ExternalNetworkVlanID_default: 41
+InternalApiNetworkVlanID_default: 44
+StorageNetworkVlanID_default: 46
+StorageMgmtNetworkVlanID_default: 45
+TenantNetworkVlanID_default: 43
+ManagementNetworkVlanID_default: 4090
+ExternalInterfaceDefaultRoute_default: '10.64.108.57'
+ControlPlaneSubnetCidr_default: 26
+name1: nic4
+name2: nic2
+

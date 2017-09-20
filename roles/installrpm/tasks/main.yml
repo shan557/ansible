@@ -1,0 +1,3 @@
+---
+# tasks file for installrpm
+- include: install.yaml

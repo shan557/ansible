@@ -1,0 +1,40 @@
+- name: Copy the instackenv.json file
+  copy: src=instackenv.json dest=/home/stack/ owner=stack group=stack
+
+- name: Copy the network folder 
+  synchronize: src=/usr/share/openstack-tripleo-heat-templates/network dest=/home/stack/templates  owner=no group=no
+  delegate_to: "{{ ansible_default_ipv4.address }}"
+
+- name: Changing the network directory permission
+  shell: chown -R stack.stack /home/stack/templates/network
+
+- name: Configuration of compute file in progress
+  template: src=compute.j2 dest=/home/stack/templates/network/config/single-nic-vlans/compute.yaml owner=stack group=stack
+
+- name: Configuration of controller file in progress
+  template: src=controller.j2 dest=/home/stack/templates/network/config/single-nic-vlans/controller.yaml owner=stack group=stack
+
+- name: Coping network-isolation.yaml file
+  copy: src=network-isolation.yaml dest=/home/stack/templates/network-isolation.yaml owner=stack group=stack 
+
+- name: Configuration of networking env file
+  template: src=network-env.j2 dest=/home/stack/templates/networking-env.yaml owner=stack group=stack
+
+- name: Configuration of external.yaml
+  template: src=external.j2 dest=/home/stack/templates/network/external.yaml owner=stack group=stack
+
+- name: Configuration of internal_api.yaml
+  template: src=internal_api.j2 dest=/home/stack/templates/network/internal_api.yaml owner=stack group=stack
+
+- name: Configuration of storage_mgmt.yaml
+  template: src=storage_mgmt.j2 dest=/home/stack/templates/network/storage_mgmt.yaml owner=stack group=stack
+
+
+- name: Configuration of storage.yaml
+  template: src=storage.j2 dest=/home/stack/templates/network/storage.yaml owner=stack group=stack
+
+- name: Configuration of tenant.yaml
+  template: src=tenant.j2 dest=/home/stack/templates/network/tenant.yaml owner=stack group=stack
+
+- name: Configuration of noop.yaml
+  template: src=noop.j2 dest=/home/stack/templates/network/ports/noop.yaml owner=stack group=stack

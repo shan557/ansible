@@ -1,0 +1,21 @@
+###ControllerVariables controller.yaml
+ExternalNetworkVlanID_controller: 41
+InternalApiNetworkVlanID_controller: 44
+StorageNetworkVlanID_controller: 46
+StorageMgmtNetworkVlanID_controller: 45
+TenantNetworkVlanID_controller: 43
+ManagementNetworkVlanID_controller: 4090
+ExternalInterfaceDefaultRoute_controller: '10.64.108.57'
+ControlPlaneSubnetCidr_controller: 26
+name1_controller: nic3
+name2_controller: nic2
+
+###ComputeVariables compute.yaml
+InternalApiNetworkVlanID_compute: 44
+StorageNetworkVlanID_compute: 46
+TenantNetworkVlanID_compute: 43
+ManagementNetworkVlanID_compute: 4090
+ControlPlaneSubnetCidr_compute: 26
+ExternalInterfaceDefaultRoute_compute: '10.64.108.57'
+name1_compute: nic1
+name2_compute: nic2

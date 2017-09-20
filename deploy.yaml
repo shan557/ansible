@@ -1,0 +1,5 @@
+- name: Installing OverCloud
+  hosts: all
+  remote_user: stack
+  roles:
+      - overcloud

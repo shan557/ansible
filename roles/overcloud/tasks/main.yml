@@ -1,0 +1,4 @@
+---
+# tasks file for overcloud
+- include: configuration.yaml
+- include: overcloud.yaml

@@ -1,0 +1,41 @@
+- name: import json file into the director
+  shell: source /home/stack/stackrc && openstack overcloud node import  /home/stack/instackenv.json
+
+- name: registers each node
+  shell: source /home/stack/stackrc && openstack baremetal configure boot
+
+- name: nodes are now registered and configured in the director
+  shell: source /home/stack/stackrc && openstack baremetal node list
+  register: result
+
+- name: Display the node list
+  debug: msg={{ result.stdout }}
+
+#- name: Inspecting the Hardware of Nodes
+#  copy: src=introception.sh dest=/home/stack mode=0755 owner=stack group=stack 
+
+- name: fetching the uuid of the nodes
+  shell: source /home/stack/stackrc && openstack baremetal node list --fields uuid -f value
+  register: uuid
+- debug: msg={{ uuid.stdout }}
+   
+- name: managing nodes basis on their uuid
+  shell: source /home/stack/stackrc && openstack baremetal node manage {{ item }}
+  with_items: "{{ uuid.stdout_lines }}"
+  ignore_errors: True
+
+#- name: Finally run the introception
+#  shell: source /home/stack/stackrc && openstack overcloud node introspect --all-manageable --provide
+
+- name: creating swift-data folder
+  file: name=swift-data state=directory
+
+- name: installing crudini package
+  yum: name=crudini state=installed
+
+- name: Defining the root disk for node
+  shell: source /home/stack/stackrc && swift -U service:ironic -K reliance123 download ironic-inspector inspector_data-{{ item }}
+  with_items: "{{ uuid.stdout_lines }}"
+
+- name: Running the Last Over cloud command
+  shell: source /home/stack/stackrc && openstack overcloud deploy --stack overcloud --templates -e /home/stack/templates/network-isolation.yaml -e /home/stack/templates/network-environment.yaml --control-scale {{ control_scale }}  --compute-scale {{ compute_scale }} --compute-flavor compute --control-flavor control --ntp-server 172.16.56.136 --libvirt-type qemu 

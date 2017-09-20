@@ -1,0 +1,31 @@
+{
+"nodes":[
+{
+"cpu":"16",
+"memory":"196608",
+"disk":"838",
+"arch":"x86_64",
+"name": "blade1",
+"pm_type":"pxe_ilo",
+"pm_user":"hpadmin",
+"pm_password":"hpinvent",
+"pm_addr":"172.16.71.153",
+"capabilities":"profile:compute,boot_option:local"
+},
+{
+"cpu":"16",
+"memory":"196608",
+"disk":"838",
+"arch":"x86_64",
+"name": "blade2",
+"pm_type":"pxe_ilo",
+"pm_user":"hpadmin",
+"pm_password":"hpinvent",
+"pm_addr":"172.16.71.154",
+"capabilities":"profile:control,boot_option:local"
+}
+]
+}
+
+
+
