@@ -47,6 +47,6 @@
   - name: installing tripleoclent director images and introspection kernel
     yum: name={{ item }} state=installed
     with_items:
-    - tripleoclient
+    - python-tripleoclient
     - rhosp-director-images 
     - rhosp-director-images-ipa

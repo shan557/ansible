@@ -1,5 +1,15 @@
-- name: Installing OverCloud
-  hosts: all
-  remote_user: stack
+- hosts: 'all'
+  remote_user: root
   roles:
-      - overcloud
+  - installrpm
+
+- hosts: 'all'
+  remote_user: root
+  roles:
+  - adduser
+
+- hosts: 'all'
+  remote_user: stack
+  become: false
+  roles: 
+  - udirector
