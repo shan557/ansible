@@ -24,10 +24,19 @@
   - lineinfile: dest=/etc/ntp.conf state=absent regexp=^server
   - lineinfile: dest=/etc/ntp.conf state=present line="server 172.16.56.136 iburst"
   - lineinfile: dest=/etc/resolv.conf line="nameserver 8.8.8.8"
+  
+  - name: Stop NTPD service
+    service: name=ntpd state=stopped
+ 
   - command: ntpdate 172.16.56.136
+ 
   - name: starting NTP permanently across reboot
     service: name=ntpd state=started
+ 
+    
   - command: chkconfig ntpd on
+    
+
 #  - name: adding subscription manager
 #    command: subscription-manager register --username rohit.m.mehta@ril.com --password rjil@1234
 #  - name: attaching a pool 
@@ -42,8 +51,6 @@
     service: name=firewalld state=stopped
   - name: permanently disabling firewalld
     command: chkconfig firewalld off
-#  - name: installing undercloud tripleoclient
-#    command: yum install -y python-tripleoclient
   - name: installing tripleoclent director images and introspection kernel
     yum: name={{ item }} state=installed
     with_items:

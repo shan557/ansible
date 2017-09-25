@@ -3,15 +3,15 @@
 resource_registry:
   # Network Interface templates to use (these files must exist)
   OS::TripleO::BlockStorage::Net::SoftwareConfig:
-    ../network/config/single-nic-vlans/cinder-storage.yaml
+    /home/stack/templates/network/config/single-nic-vlans/cinder-storage.yaml
   OS::TripleO::Compute::Net::SoftwareConfig:
-    ../network/config/single-nic-vlans/compute.yaml
+    /home/stack/templates/network/config/single-nic-vlans/compute.yaml
   OS::TripleO::Controller::Net::SoftwareConfig:
-    ../network/config/single-nic-vlans/controller.yaml
+    /home/stack/templates/network/config/single-nic-vlans/controller.yaml
   OS::TripleO::ObjectStorage::Net::SoftwareConfig:
-    ../network/config/single-nic-vlans/swift-storage.yaml
+    /home/stack/templates/network/config/single-nic-vlans/swift-storage.yaml
   OS::TripleO::CephStorage::Net::SoftwareConfig:
-    ../network/config/single-nic-vlans/ceph-storage.yaml
+    /home/stack/templates/network/config/single-nic-vlans/ceph-storage.yaml
 
 parameter_defaults:
   # This section is where deployment-specific configuration is done
@@ -35,7 +35,7 @@ parameter_defaults:
   # Customize the IP ranges on each network to use for static IPs and VIPs
   InternalApiAllocationPools: [{ 'start': '{{ InternalApiAllocationPools_start }}', 'end': '{{ InternalApiAllocationPools_end }}' }]
   StorageAllocationPools: [{ 'start': '{{ StorageAllocationPools_start }}', 'end': '{{ StorageAllocationPools_end }}' }]
-  StorageMgmtAllocationPools: [{' start': '{{ StorageMgmtAllocationPools_start }}', 'end': '{{ StorageMgmtAllocationPools_end }}' }]
+  StorageMgmtAllocationPools: [{'start': '{{ StorageMgmtAllocationPools_start }}', 'end': '{{ StorageMgmtAllocationPools_end }}' }]
   TenantAllocationPools: [{ 'start': '{{ TenantAllocationPools_start }}', 'end': '{{ TenantAllocationPools_end }}' }]
   # Leave room if the external network is also used for floating IPs
   ExternalAllocationPools: [{ 'start': '{{ ExternalAllocationPools_start }}', 'end': '{{ ExternalAllocationPools_end }}' }]

@@ -62,6 +62,9 @@
   - name: making source permanent for stackrc
     lineinfile: dest=/home/stack/.bash_profile line="source ~/stackrc"
 
+  - name: Uploading Images
+    shell: source /home/stackrc && openstack overcloud image upload --image-path /home/stack/images/
+
   - name: output for neutron subnet-list
     shell:  source /home/stack/stackrc && neutron subnet-list | awk '{print $2}' | egrep -v 'id|^$'
     register: id

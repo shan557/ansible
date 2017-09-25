@@ -11,8 +11,6 @@
 - name: Display the node list
   debug: msg={{ result.stdout }}
 
-#- name: Inspecting the Hardware of Nodes
-#  copy: src=introception.sh dest=/home/stack mode=0755 owner=stack group=stack 
 
 - name: fetching the uuid of the nodes
   shell: source /home/stack/stackrc && openstack baremetal node list --fields uuid -f value
@@ -24,14 +22,15 @@
   with_items: "{{ uuid.stdout_lines }}"
   ignore_errors: True
 
-#- name: Finally run the introception
-#  shell: source /home/stack/stackrc && openstack overcloud node introspect --all-manageable --provide
+- name: Finally run the introception
+  shell: source /home/stack/stackrc && openstack overcloud node introspect --all-manageable --provide
 
 - name: creating swift-data folder
   file: name=swift-data state=directory
 
 - name: installing crudini package
   yum: name=crudini state=installed
+  become: true
 
 - name: Defining the root disk for node
   shell: source /home/stack/stackrc && swift -U service:ironic -K reliance123 download ironic-inspector inspector_data-{{ item }}

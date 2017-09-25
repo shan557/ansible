@@ -18,7 +18,7 @@
   copy: src=network-isolation.yaml dest=/home/stack/templates/network-isolation.yaml owner=stack group=stack 
 
 - name: Configuration of networking env file
-  template: src=network-env.j2 dest=/home/stack/templates/networking-env.yaml owner=stack group=stack
+  template: src=network-env.j2 dest=/home/stack/templates/network-environment.yaml owner=stack group=stack
 
 - name: Configuration of external.yaml
   template: src=external.j2 dest=/home/stack/templates/network/external.yaml owner=stack group=stack
