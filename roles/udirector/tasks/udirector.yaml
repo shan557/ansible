@@ -7,8 +7,9 @@
      - { regexp: "#undercloud_hostname" ,line: "undercloud_hostname=ucloudgurgaon.jiolabs.com" }
      - { regexp: "#local_ip" , line: "local_ip=172.16.78.2/26" }
      - { regexp: "#network_gateway", line: "network_gateway=172.16.78.1" }
-     - { regexp: "#undercloud_public_vip", line: "undercloud_public_vip=172.16.78.3" }
-     - { regexp: "#undercloud_admin_vip", line: "undercloud_admin_vip=172.16.78.4" }
+     - { regexp: "#undercloud_public_host", line: "undercloud_public_host=172.16.78.3" }
+     - { regexp: "#undercloud_admin_host", line: "undercloud_admin_host=172.16.78.4" }
+     - { regexp: "#undercloud_service_certificate", line: "undercloud_service_certificate=/etc/pki/instack-certs/undercloud.pem" }
      - { regexp: "#local_interface", line: "local_interface=eno2" }
      - { regexp: "#network_cidr", line: "network_cidr=172.16.78.0/26" }
      - { regexp: "#dhcp_start", line: "dhcp_start=172.16.78.42" }
@@ -17,13 +18,10 @@
      - { regexp: "#inspection_iprange", line: "inspection_iprange=172.16.78.31,172.16.78.41" }
      - { regexp: "#undercloud_debug ", line: "undercloud_debug=true" }
      - { regexp: "#enable_tempest ", line: "enable_tempest=true" }
-     - { regexp: "#enable_mistral ", line: "enable_mistral=true" }
-     - { regexp: "#enable_zaqar ", line: "enable_zaqar=true" }
      - { regexp: "#enable_telemetry", line: "enable_telemetry=true" }
      - { regexp: "#enable_ui ", line: "enable_ui=true" }
      - { regexp: "#enable_validations", line: "enable_validations=true" }
      - { regexp: "#ipxe_enabled", line: "ipxe_enabled=true" }
-     - { regexp: "#store_events", line: "store_events=true" }
      - { regexp: "#undercloud_db_password", line: "undercloud_db_password=reliance123" }
      - { regexp: "#undercloud_admin_password", line: "undercloud_admin_password=reliance123" }
      - { regexp: "#undercloud_glance_password", line: "undercloud_glance_password=reliance123" }
@@ -38,7 +36,6 @@
      - { regexp: "#undercloud_mistral_password", line: "undercloud_mistral_password=reliance123" }
      - { regexp: "#undercloud_rabbit_password", line: "undercloud_rabbit_password=reliance123" }
      - { regexp: "#undercloud_heat_stack_domain_admin_password", line: "undercloud_heat_stack_domain_admin_password=reliance123" }
-     - { regexp: "#undercloud_sensu_password", line: "undercloud_sensu_password=reliance123" }
      - { regexp: "#undercloud_haproxy_stats_password", line: "undercloud_haproxy_stats_password=reliance123" }
      - { regexp: "#undercloud_zaqar_password", line: "undercloud_zaqar_password=reliance123" }
 
@@ -63,7 +60,7 @@
     lineinfile: dest=/home/stack/.bash_profile line="source ~/stackrc"
 
   - name: Uploading Images
-    shell: source /home/stackrc && openstack overcloud image upload --image-path /home/stack/images/
+    shell: source /home/stack/stackrc && openstack overcloud image upload --image-path /home/stack/images/
 
   - name: output for neutron subnet-list
     shell:  source /home/stack/stackrc && neutron subnet-list | awk '{print $2}' | egrep -v 'id|^$'
