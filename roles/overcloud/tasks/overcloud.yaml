@@ -33,7 +33,7 @@
   become: true
 
 - name: Defining the root disk for node
-  shell: source /home/stack/stackrc && swift -U service:ironic -K reliance123 download ironic-inspector inspector_data-{{ item }}
+  shell: chdir=/home/stack/swift-data source /home/stack/stackrc && swift -U service:ironic -K reliance123 download ironic-inspector inspector_data-{{ item }}
   with_items: "{{ uuid.stdout_lines }}"
 
 - name: Running the Last Over cloud command

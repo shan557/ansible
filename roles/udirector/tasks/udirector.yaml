@@ -10,8 +10,10 @@
      - { regexp: "#undercloud_public_host", line: "undercloud_public_host=172.16.78.3" }
      - { regexp: "#undercloud_admin_host", line: "undercloud_admin_host=172.16.78.4" }
      - { regexp: "#undercloud_service_certificate", line: "undercloud_service_certificate=/etc/pki/instack-certs/undercloud.pem" }
+     - { regexp: "#certificate_generation_ca", line: "certificate_generation_ca=local" }
      - { regexp: "#local_interface", line: "local_interface=eno2" }
      - { regexp: "#network_cidr", line: "network_cidr=172.16.78.0/26" }
+     - { regexp: "#masquerade_network", line: "masquerade_network=172.16.78.0/26" }
      - { regexp: "#dhcp_start", line: "dhcp_start=172.16.78.42" }
      - { regexp: "#dhcp_end", line: "dhcp_end=172.16.78.62" }
      - { regexp: "#inspection_interface", line: "inspection_interface=br-ctlplane" }

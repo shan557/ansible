@@ -6,9 +6,9 @@ StorageNetworkVlanID_controller: 46
 StorageMgmtNetworkVlanID_controller: 45
 TenantNetworkVlanID_controller: 43
 ManagementNetworkVlanID_controller: 4090
-ExternalInterfaceDefaultRoute_controller: '10.64.108.57'
+ExternalInterfaceDefaultRoute_controller: 10.64.108.57
 ControlPlaneSubnetCidr_controller: 26
-name1_controller: nic3
+name1_controller: nic1
 name2_controller: nic2
 
 ###ComputeVariables compute.yaml configuration############################################################################
@@ -18,7 +18,7 @@ StorageNetworkVlanID_compute: 46
 TenantNetworkVlanID_compute: 43
 ManagementNetworkVlanID_compute: 4090
 ControlPlaneSubnetCidr_compute: 26
-ExternalInterfaceDefaultRoute_compute: '10.64.108.57'
+ExternalInterfaceDefaultRoute_compute: 10.64.108.57
 name1_compute: nic1
 name2_compute: nic2
 
@@ -27,45 +27,40 @@ name2_compute: nic2
 #################################################################################
 # CIDR subnet mask length for provisioning network
 
-ControlPlaneSubnetCidr_networkenv: 100
-ControlPlaneDefaultRoute_networkenv: 172.16.72.2
-EC2MetadataIp_networkenv: 172.16.72.2
+ControlPlaneSubnetCidr_networkenv: 26
+ControlPlaneDefaultRoute_networkenv: 172.16.78.2
+EC2MetadataIp_networkenv: 172.16.78.2
 
 # Customize the IP subnets to match the local environment
-InternalApiNetCidr_networkenv: 172.16.73.0/24
-StorageNetCidr_networkenv: 172.16.76.0/24
-StorageMgmtNetCidr_networkenv: 172.16.75.0/24
-TenantNetCidr_networkenv: 172.16.74.0/24
-ExternalNetCidr_networkenv: 10.64.105.0/25
+InternalApiNetCidr_networkenv: 172.16.78.128/28 
+StorageNetCidr_networkenv: 172.16.78.160/28 
+StorageMgmtNetCidr_networkenv: 172.16.78.144/28 
+TenantNetCidr_networkenv: 172.16.78.64/26
+ExternalNetCidr_networkenv: 10.64.108.56/29 
 # Customize the VLAN IDs to match the local environment
-InternalApiNetworkVlanID_networkenv: 21
-StorageNetworkVlanID_networkenv: 24
-StorageMgmtNetworkVlanID_networkenv: 23
-TenantNetworkVlanID_networkenv: 22
-ExternalNetworkVlanID_networkenv: 25
+InternalApiNetworkVlanID_networkenv: 44
+StorageNetworkVlanID_networkenv: 46
+StorageMgmtNetworkVlanID_networkenv: 45
+TenantNetworkVlanID_networkenv: 43
+ExternalNetworkVlanID_networkenv: 41
 # Customize the IP ranges on each network to use for static IPs and VIPs
-InternalApiAllocationPools_networkenv: [{ 'start': '172.16.73.20', 'end': '172.16.73.200' }]
-InternalApiAllocationPools_start: 172.16.73.20
-InternalApiAllocationPools_end: 172.16.73.200
+InternalApiAllocationPools_start: 172.16.78.130
+InternalApiAllocationPools_end: 172.16.78.142
 
-StorageAllocationPools_networkenv: [{ 'start': '172.16.76.20', 'end': '172.16.76.200' }]
-StorageAllocationPools_start: 172.16.76.20
-StorageAllocationPools_end: 172.16.76.200
+StorageAllocationPools_start: 172.16.78.162
+StorageAllocationPools_end: 172.16.78.172
 
-StorageMgmtAllocationPools_networkenv: [{' start': '172.16.75.20', 'end': '172.16.75.200' }]
-StorageMgmtAllocationPools_start: 172.16.75.20
-StorageMgmtAllocationPools_end: 172.16.75.200
+StorageMgmtAllocationPools_start: 172.16.78.146
+StorageMgmtAllocationPools_end: 172.16.78.158
 
-TenantAllocationPools_networkenv: [{ 'start': '172.16.74.20', 'end': '172.16.74.200' }]
-TenantAllocationPools_start: 172.16.74.20
-TenantAllocationPools_end: 172.16.74.200
+TenantAllocationPools_start: 172.16.78.66
+TenantAllocationPools_end: 172.16.78.126
 
 # Leave room if the external network is also used for floating IPs
-ExternalAllocationPools_networkenv: [{ 'start': '10.64.105.10', 'end': '10.64.105.110' }]
-ExternalAllocationPools_start: 10.64.105.10
-ExternalAllocationPools_end: 10.64.105.110
+ExternalAllocationPools_start: 10.64.108.59
+ExternalAllocationPools_end: 10.64.108.61
 # Gateway router for the external network
-ExternalInterfaceDefaultRoute_networkenv: 10.64.105.1
+ExternalInterfaceDefaultRoute_networkenv: 10.64.108.57
 # Define the DNS servers (maximum 2) for the overcloud nodes
 DnsServers_networkenv: ["172.16.56.142","8.8.8.8"]
 DnsServers_start: 172.16.56.142
@@ -79,7 +74,7 @@ BondInterfaceOvsOptions_networkenv: "bond_mode=active-backup"
 
 ExternalNetCidr_default: 10.64.108.56/29
 ExternalAllocationPools_start1: 10.64.108.59
-ExternalAllocationPools_end1: 10.64.108.62
+ExternalAllocationPools_end1: 10.64.108.61
 ExternalInterfaceDefaultRoute_default: 10.64.108.57
 
 ############################################Internal_api.yaml configuration###################################################
@@ -92,19 +87,19 @@ InternalApiAllocationPools_end1: 172.16.78.140
 
 StorageMgmtNetCidr_default: 172.16.78.144/28
 StorageMgmtAllocationPools_start1: 172.16.78.146
-StorageMgmtAllocationPools_end1: 172.16.78.156
+StorageMgmtAllocationPools_end1: 172.16.78.155
 
 ##########################################storage.yaml configuration#########################################################
 
 StorageNetCidr_default: 172.16.78.160/28
 StorageAllocationPools_start1: 172.16.78.162
-StorageAllocationPools_end1: 172.16.78.170
+StorageAllocationPools_end1: 172.16.78.169
 
 ##########################################tenant.yaml configuration#########################################################
 
 TenantNetCidr_default: 172.16.78.64/26
 TenantAllocationPools_start1: 172.16.78.66
-TenantAllocationPools_end1: 172.16.78.100
+TenantAllocationPools_end1: 172.16.78.99
 
 #########################################noop.yaml configuration###############################################################
 
