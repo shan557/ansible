@@ -9,7 +9,8 @@
      - { regexp: "#network_gateway", line: "network_gateway=172.16.78.1" }
      - { regexp: "#undercloud_public_host", line: "undercloud_public_host=172.16.78.3" }
      - { regexp: "#undercloud_admin_host", line: "undercloud_admin_host=172.16.78.4" }
-     - { regexp: "#undercloud_service_certificate", line: "undercloud_service_certificate=/etc/pki/instack-certs/undercloud.pem" }
+#     - { regexp: "#undercloud_service_certificate", line: "undercloud_service_certificate=/etc/pki/instack-certs/undercloud.pem" }
+     - { regexp: "#generate_service_certificate", line: "generate_service_certificate=true" }
      - { regexp: "#certificate_generation_ca", line: "certificate_generation_ca=local" }
      - { regexp: "#local_interface", line: "local_interface=eno2" }
      - { regexp: "#network_cidr", line: "network_cidr=172.16.78.0/26" }
@@ -55,6 +56,25 @@
     become: true
   - name: Install UnderCloud Finally 
     command: openstack undercloud install
+    register: undercloud
+
+  - file: path=/var/log/undercloud.log state=touch mode="u+rwx,g-rwx,o-rwx" 
+
+  - name: Saving the logs
+      local_action:
+      module: copy
+      dest: "/var/log/undercloud.log"
+      content: "{{ undercloud.stdout_lines }}"
+ 
+ - command: grep "Undercloud install complete." /var/log/undercloud.log
+    register: status
+
+  - include: ./success.yaml
+    when: status.stdout == "Undercloud install complete."
+ 
+ - include: ./failure.yaml
+    when: "not status.stdout == ''"
+
   - name: making source permanent for stackrc
     lineinfile: dest=/home/stack/.bash_profile line="source ~/stackrc"
 
@@ -75,5 +95,9 @@
 
   - name: Neutron Subnet show to check the DNS entry
     shell: source /home/stack/stackrc && neutron subnet-show {{ id.stdout }}
+  
+ - name: Checking Public vip
+    wait_for: host=172.16.78.3 timeout=1
+    delegate_to: 10.64.108.58
 
-
+  - debug: msg="Piblic vip is pingable"

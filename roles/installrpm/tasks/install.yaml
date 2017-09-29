@@ -49,8 +49,10 @@
     command: yum update -y
   - name: stopping firewalld
     service: name=firewalld state=stopped
+    ignore_errors: True
   - name: permanently disabling firewalld
     command: chkconfig firewalld off
+    ignore_errors: True
   - name: installing tripleoclent director images and introspection kernel
     yum: name={{ item }} state=installed
     with_items:

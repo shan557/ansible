@@ -62,7 +62,6 @@ ExternalAllocationPools_end: 10.64.108.61
 # Gateway router for the external network
 ExternalInterfaceDefaultRoute_networkenv: 10.64.108.57
 # Define the DNS servers (maximum 2) for the overcloud nodes
-DnsServers_networkenv: ["172.16.56.142","8.8.8.8"]
 DnsServers_start: 172.16.56.142
 DnsServers_end: 8.8.8.8
 # The tunnel type for the tenant network (vxlan or gre). Set to '' to disable tunneling
