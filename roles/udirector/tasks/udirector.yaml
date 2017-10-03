@@ -4,47 +4,48 @@
   - name: Configuring undercloud.conf
     lineinfile: dest=/home/stack/undercloud.conf regexp={{ item.regexp }} line={{ item.line}} state=present
     with_items:
-     - { regexp: "#undercloud_hostname" ,line: "undercloud_hostname=ucloudgurgaon.jiolabs.com" }
-     - { regexp: "#local_ip" , line: "local_ip=172.16.78.2/26" }
-     - { regexp: "#network_gateway", line: "network_gateway=172.16.78.1" }
-     - { regexp: "#undercloud_public_host", line: "undercloud_public_host=172.16.78.3" }
-     - { regexp: "#undercloud_admin_host", line: "undercloud_admin_host=172.16.78.4" }
-#     - { regexp: "#undercloud_service_certificate", line: "undercloud_service_certificate=/etc/pki/instack-certs/undercloud.pem" }
-     - { regexp: "#generate_service_certificate", line: "generate_service_certificate=true" }
-     - { regexp: "#certificate_generation_ca", line: "certificate_generation_ca=local" }
-     - { regexp: "#local_interface", line: "local_interface=eno2" }
-     - { regexp: "#network_cidr", line: "network_cidr=172.16.78.0/26" }
-     - { regexp: "#masquerade_network", line: "masquerade_network=172.16.78.0/26" }
-     - { regexp: "#dhcp_start", line: "dhcp_start=172.16.78.42" }
-     - { regexp: "#dhcp_end", line: "dhcp_end=172.16.78.62" }
-     - { regexp: "#inspection_interface", line: "inspection_interface=br-ctlplane" }
-     - { regexp: "#inspection_iprange", line: "inspection_iprange=172.16.78.31,172.16.78.41" }
-     - { regexp: "#undercloud_debug ", line: "undercloud_debug=true" }
-     - { regexp: "#enable_tempest ", line: "enable_tempest=true" }
-     - { regexp: "#enable_telemetry", line: "enable_telemetry=true" }
-     - { regexp: "#enable_ui ", line: "enable_ui=true" }
-     - { regexp: "#enable_validations", line: "enable_validations=true" }
-     - { regexp: "#ipxe_enabled", line: "ipxe_enabled=true" }
-     - { regexp: "#undercloud_db_password", line: "undercloud_db_password=reliance123" }
-     - { regexp: "#undercloud_admin_password", line: "undercloud_admin_password=reliance123" }
-     - { regexp: "#undercloud_glance_password", line: "undercloud_glance_password=reliance123" }
-     - { regexp: "#undercloud_heat_password", line: "undercloud_heat_password=reliance123" }
-     - { regexp: "#undercloud_neutron_password", line: "undercloud_neutron_password=reliance123" }
-     - { regexp: "#undercloud_nova_password", line: "undercloud_nova_password=reliance123" }
-     - { regexp: "#undercloud_ironic_password", line: "undercloud_ironic_password=reliance123" }
-     - { regexp: "#undercloud_aodh_password", line: "undercloud_aodh_password=reliance123" }
-     - { regexp: "#undercloud_ceilometer_password", line: "undercloud_ceilometer_password=reliance123" }
-     - { regexp: "#undercloud_ceilometer_snmpd_password", line: "undercloud_ceilometer_snmpd_password=reliance123" }
-     - { regexp: "#undercloud_swift_password", line: "undercloud_swift_password=reliance123" }
-     - { regexp: "#undercloud_mistral_password", line: "undercloud_mistral_password=reliance123" }
-     - { regexp: "#undercloud_rabbit_password", line: "undercloud_rabbit_password=reliance123" }
-     - { regexp: "#undercloud_heat_stack_domain_admin_password", line: "undercloud_heat_stack_domain_admin_password=reliance123" }
-     - { regexp: "#undercloud_haproxy_stats_password", line: "undercloud_haproxy_stats_password=reliance123" }
-     - { regexp: "#undercloud_zaqar_password", line: "undercloud_zaqar_password=reliance123" }
+     - { regexp: "#undercloud_hostname" ,line: "undercloud_hostname={{ undercloud_hostname }}" }
+     - { regexp: "#local_ip" , line: "local_ip={{ local_ip }}" }
+     - { regexp: "#network_gateway", line: "network_gateway={{ network_gateway }}" }
+     - { regexp: "#undercloud_public_host", line: "undercloud_public_host={{ undercloud_public_host }}" }
+     - { regexp: "#undercloud_admin_host", line: "undercloud_admin_host={{ undercloud_admin_host }}" }
+     - { regexp: "#undercloud_service_certificate", line: "undercloud_service_certificate={{ undercloud_service_certificate }}" }
+     - { regexp: "#generate_service_certificate", line: "generate_service_certificate= {{ generate_service_certificate }}" }
+     - { regexp: "#certificate_generation_ca", line: "certificate_generation_ca={{ certificate_generation_ca }}" }
+     - { regexp: "#local_interface", line: "local_interface={{ local_interface }}" }
+     - { regexp: "#network_cidr", line: "network_cidr={{ network_cidr }}" }
+     - { regexp: "#masquerade_network", line: "masquerade_network={{ masquerade_network }}" }
+     - { regexp: "#dhcp_start", line: "dhcp_start={{ dhcp_start }}" }
+     - { regexp: "#dhcp_end", line: "dhcp_end={{ dhcp_end }}" }
+     - { regexp: "#inspection_interface", line: "inspection_interface={{ inspection_interface }}" }
+     - { regexp: "#inspection_iprange", line: "inspection_iprange={{ inspection_iprange }}" }
+     - { regexp: "#undercloud_debug ", line: "undercloud_debug={{ undercloud_debug }}" }
+     - { regexp: "#enable_tempest ", line: "enable_tempest={{ enable_tempest }}" }
+     - { regexp: "#enable_telemetry", line: "enable_telemetry={{ enable_telemetry }}" }
+     - { regexp: "#enable_ui ", line: "enable_ui={{ enable_ui }}" }
+     - { regexp: "#enable_validations", line: "enable_validations={{ enable_validations }}" }
+     - { regexp: "#ipxe_enabled", line: "ipxe_enabled={{ ipxe_enabled }}" }
+     - { regexp: "#undercloud_db_password", line: "undercloud_db_password={{ undercloud_db_password }}" }
+     - { regexp: "#undercloud_admin_password", line: "undercloud_admin_password={{ undercloud_admin_password }}" }
+     - { regexp: "#undercloud_glance_password", line: "undercloud_glance_password={{ undercloud_glance_password }}" }
+     - { regexp: "#undercloud_heat_password", line: "undercloud_heat_password={{ undercloud_heat_password }}" }
+     - { regexp: "#undercloud_neutron_password", line: "undercloud_neutron_password={{ undercloud_neutron_password }}" }
+     - { regexp: "#undercloud_nova_password", line: "undercloud_nova_password={{ undercloud_nova_password }}" }
+     - { regexp: "#undercloud_ironic_password", line: "undercloud_ironic_password={{ undercloud_ironic_password }}" }
+     - { regexp: "#undercloud_aodh_password", line: "undercloud_aodh_password={{ undercloud_aodh_password }}" }
+     - { regexp: "#undercloud_ceilometer_password", line: "undercloud_ceilometer_password={{ undercloud_ceilometer_password }}" }
+     - { regexp: "#undercloud_ceilometer_snmpd_password", line: "undercloud_ceilometer_snmpd_password={{ undercloud_ceilometer_snmpd_password }}" }
+     - { regexp: "#undercloud_swift_password", line: "undercloud_swift_password={{ undercloud_swift_password }}" }
+     - { regexp: "#undercloud_mistral_password", line: "undercloud_mistral_password={{ undercloud_mistral_password }}" }
+     - { regexp: "#undercloud_rabbit_password", line: "undercloud_rabbit_password={{ undercloud_rabbit_password }}" }
+     - { regexp: "#undercloud_heat_stack_domain_admin_password", line: "undercloud_heat_stack_domain_admin_password={{ undercloud_heat_stack_domain_admin_password }}" }
+     - { regexp: "#undercloud_haproxy_stats_password", line: "undercloud_haproxy_stats_password={{ undercloud_haproxy_stats_password }}" }
+     - { regexp: "#undercloud_zaqar_password", line: "undercloud_zaqar_password={{ undercloud_zaqar_password }}" }
 
   - name: generating the certificate
     command: openssl genrsa -out /home/stack/privkey.pem 2048
-  - command: openssl req -new -x509 -key privkey.pem -out cacert.pem -subj "/C=IN/ST=HR/L=GUR/O=IT/CN=172.16.78.3" -days 365
+
+  - command: openssl req -new -x509 -key privkey.pem -out cacert.pem -subj "/C=IN/ST=HR/L=GUR/O=IT/CN={{ undercloud_public_host }}" -days 365
   - shell: cat cacert.pem privkey.pem > undercloud.pem
   - file: name=/etc/pki/instack-certs state=directory
     become: true
@@ -53,27 +54,12 @@
     - "cp undercloud.pem /etc/pki/instack-certs"
     - 'semanage fcontext -a -t etc_t "/etc/pki/instack-certs(/.*)?"'
     - "restorecon -R /etc/pki/instack-certs"
+    - "sudo cp cacert.pem /etc/pki/ca-trust/source/anchors/"
+    - "sudo update-ca-trust extract"
     become: true
+
   - name: Install UnderCloud Finally 
-    command: openstack undercloud install
-    register: undercloud
-
-  - file: path=/var/log/undercloud.log state=touch mode="u+rwx,g-rwx,o-rwx" 
-
-  - name: Saving the logs
-      local_action:
-      module: copy
-      dest: "/var/log/undercloud.log"
-      content: "{{ undercloud.stdout_lines }}"
- 
- - command: grep "Undercloud install complete." /var/log/undercloud.log
-    register: status
-
-  - include: ./success.yaml
-    when: status.stdout == "Undercloud install complete."
- 
- - include: ./failure.yaml
-    when: "not status.stdout == ''"
+    command: openstack undercloud install 
 
   - name: making source permanent for stackrc
     lineinfile: dest=/home/stack/.bash_profile line="source ~/stackrc"
@@ -96,8 +82,9 @@
   - name: Neutron Subnet show to check the DNS entry
     shell: source /home/stack/stackrc && neutron subnet-show {{ id.stdout }}
   
- - name: Checking Public vip
-    wait_for: host=172.16.78.3 timeout=1
+  - name: Checking Public vip
+    wait_for: host={{ undercloud_public_host }} port=22 timeout=1
     delegate_to: 10.64.108.58
-
-  - debug: msg="Piblic vip is pingable"
+      
+  - debug: msg="Public vip is Pinging"
+    
