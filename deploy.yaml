@@ -1,18 +1,18 @@
-- hosts: 'undercloud'
-  remote_user: root
-  roles:
-  - installrpm
+#- hosts: 'undercloud'
+#  remote_user: root
+#  roles:
+#  - installrpm
+#
+#- hosts: 'undercloud'
+#  remote_user: root
+#  roles:
+#  - adduser
 
-- hosts: 'undercloud'
-  remote_user: root
-  roles:
-  - adduser
-
-- hosts: 'undercloud'
-  remote_user: stack
-  become: false
-  roles: 
-  - udirector
+#- hosts: 'undercloud'
+#  remote_user: stack
+#  become: false
+#  roles: 
+#  - udirector
 
 - name: installing overcloud
   hosts: 'overcloud'

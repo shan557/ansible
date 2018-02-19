@@ -1,0 +1,6 @@
+- name: testing registration of node using ansible
+  hosts: scale
+  remote_user: stack
+  become: false
+  roles:
+  - scale

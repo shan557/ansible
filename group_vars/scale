@@ -1,0 +1,4 @@
+control_scale: 1
+compute_scale: 2
+stack_name: overcloud
+node_name: node0

@@ -1,0 +1,9 @@
+- name: test 
+  hosts: undercloud
+  become: false
+  remote_user: stack
+  tasks:
+  - os_keypair:
+      state: present
+      name: ansible_key
+

@@ -5,7 +5,7 @@ InternalApiNetworkVlanID_controller: 44
 StorageNetworkVlanID_controller: 46
 StorageMgmtNetworkVlanID_controller: 45
 TenantNetworkVlanID_controller: 43
-ManagementNetworkVlanID_controller: 4090
+ManagementNetworkVlanID_controller: 42
 ExternalInterfaceDefaultRoute_controller: 10.64.108.57
 ControlPlaneSubnetCidr_controller: 26
 name1_controller: nic1
@@ -16,7 +16,7 @@ name2_controller: nic2
 InternalApiNetworkVlanID_compute: 44
 StorageNetworkVlanID_compute: 46
 TenantNetworkVlanID_compute: 43
-ManagementNetworkVlanID_compute: 4090
+ManagementNetworkVlanID_compute: 42
 ControlPlaneSubnetCidr_compute: 26
 ExternalInterfaceDefaultRoute_compute: 10.64.108.57
 name1_compute: nic1
@@ -107,6 +107,10 @@ ControlPlaneSubnetCidr_default: 26
 
 control_scale: 1
 compute_scale: 1
+
+#######################NTP server configuration#################################################################################
+
+NTP_IP: 172.16.56.136
 
 
 ########################################End of this file################################################################### 

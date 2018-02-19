@@ -30,8 +30,8 @@ parameter_defaults:
   InternalApiNetworkVlanID: {{ InternalApiNetworkVlanID_networkenv }}
   StorageNetworkVlanID: {{ StorageNetworkVlanID_networkenv }}
   StorageMgmtNetworkVlanID: {{ StorageMgmtNetworkVlanID_networkenv }}
-  TenantNetworkVlanID: {{ TenantNetworkVlanID_networkenv }} 
   TenantNetworkVlanID: {{ TenantNetworkVlanID_networkenv }}
+  ExternalNetworkVlanID: {{ ExternalNetworkVlanID_networkenv }} 
   # Customize the IP ranges on each network to use for static IPs and VIPs
   InternalApiAllocationPools: [{ 'start': '{{ InternalApiAllocationPools_start }}', 'end': '{{ InternalApiAllocationPools_end }}' }]
   StorageAllocationPools: [{ 'start': '{{ StorageAllocationPools_start }}', 'end': '{{ StorageAllocationPools_end }}' }]

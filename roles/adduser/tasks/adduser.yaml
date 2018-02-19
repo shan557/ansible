@@ -1,7 +1,7 @@
   - name: adding now
     user: name=stack comment="stack user" state=present password=".ZniW1velhpZE"
   - file: name=/home/stack/.ssh state=directory mode=0700 owner=stack group=stack
-  - copy: src=/home/gaurav/.ssh/id_rsa.pub dest=/home/stack/.ssh/authorized_keys force=yes owner=stack group=stack mode=600
+  - copy: src=~/.ssh/id_rsa.pub dest=/home/stack/.ssh/authorized_keys force=yes owner=stack group=stack mode=600
   - name: Setting up Sudoers for Stack
     copy: dest=/etc/sudoers.d/stack content="stack ALL=(root) NOPASSWD:ALL" mode=0440 backup=yes
   - name: creating directories

@@ -1,0 +1,28 @@
+- name: Registering new node using json file 
+  shell: source /home/stack/stackrc && openstack overcloud node import /home/stack/newnodes.json
+- name: Introspection new node
+  shell: source /home/stack/stackrc && openstack overcloud node introspect --all-manageable --provide
+- name: Importing kernal image into register
+  shell: source /home/stack/stackrc && openstack image list | grep kernel | cut -d "|" -f2| sed -e 's/^[ \t]*//' 
+  register: kernal_image
+- name: Importing ram image into register
+  shell: source /home/stack/stackrc && openstack image list | grep ramdisk | cut -d "|" -f2|sed -e 's/^[ \t]*//'
+  register: ram_image 
+- name: displaying output of kernal image
+  debug:
+    var: kernal_image.stdout
+- name: displaying ram image ID
+  debug: 
+   var: ram_image.stdout
+
+- name: Assigning kernal image to new node
+  shell: source /home/stack/stackrc && ironic node-update {{ node_name }} add driver_info/deploy_kernel={{ kernal_image.stdout }}
+- name: Assigning ram image to new node
+  shell: source /home/stack/stackrc && ironic node-update {{ node_name }} add driver_info/deploy_ramdisk={{ ram_image.stdout }}
+- name: Deploying new node to existing overcloud setup
+  shell: source /home/stack/stackrc && openstack overcloud deploy --stack {{ stack_name }} --templates -e /home/stack/templates/network-isolation.yaml -e /home/stack/templates/network-environment.yaml --control-scale {{ control_scale }}  --compute-scale {{ compute_scale }} --compute-flavor compute --control-flavor control --ntp-server 172.16.56.136 --libvirt-type qemu
+
+
+
+
+  

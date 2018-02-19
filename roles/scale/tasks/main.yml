@@ -1,0 +1,3 @@
+---
+# tasks file for scale
+- include: scale.yml

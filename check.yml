@@ -1,0 +1,15 @@
+- name: checking
+  hosts: undercloud
+  become: false
+  tasks:
+  - name: fetching the uuid of the nodes
+    shell: source /home/stack/stackrc && openstack baremetal node list --fields uuid -f value
+    register: uuid
+  - debug: msg={{ uuid.stdout }}
+  - name: geting swift password
+    shell: sudo crudini --get /etc/ironic-inspector/inspector.conf swift password
+    register: swift_password
+  - debug: msg={{ swift_password.stdout }}
+  - name: Defining the root disk for node
+    shell: chdir=/home/stack/swift-data source /home/stack/stackrc && swift -U service:ironic -K {{ swift_password.stdout }} download ironic-inspector inspector_data-{{ item }}
+    with_items: "{{ uuid.stdout_lines }}"

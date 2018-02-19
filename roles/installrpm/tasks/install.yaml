@@ -22,13 +22,13 @@
   - name: NTP configurations
     yum: name=ntp state=installed
   - lineinfile: dest=/etc/ntp.conf state=absent regexp=^server
-  - lineinfile: dest=/etc/ntp.conf state=present line="server 172.16.56.136 iburst"
+  - lineinfile: dest=/etc/ntp.conf state=present line="server {{ NTP_IP }} iburst"
   - lineinfile: dest=/etc/resolv.conf line="nameserver 8.8.8.8"
   
   - name: Stop NTPD service
     service: name=ntpd state=stopped
  
-  - command: ntpdate 172.16.56.136
+  - command: ntpdate {{ NTP_IP }}
  
   - name: starting NTP permanently across reboot
     service: name=ntpd state=started

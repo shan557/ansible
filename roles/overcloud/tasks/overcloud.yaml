@@ -32,9 +32,13 @@
   yum: name=crudini state=installed
   become: true
 
+- name: geting swift password
+  shell: sudo crudini --get /etc/ironic-inspector/inspector.conf swift password
+  register: swift_password
+
 - name: Defining the root disk for node
-  shell: chdir=/home/stack/swift-data source /home/stack/stackrc && swift -U service:ironic -K reliance123 download ironic-inspector inspector_data-{{ item }}
+  shell: chdir=/home/stack/swift-data source /home/stack/stackrc && swift -U service:ironic -K {{ swift_password.stdout }} download ironic-inspector inspector_data-{{ item }}
   with_items: "{{ uuid.stdout_lines }}"
 
 - name: Running the Last Over cloud command
-  shell: source /home/stack/stackrc && openstack overcloud deploy --stack overcloud --templates -e /home/stack/templates/network-isolation.yaml -e /home/stack/templates/network-environment.yaml --control-scale {{ control_scale }}  --compute-scale {{ compute_scale }} --compute-flavor compute --control-flavor control --ntp-server 172.16.56.136 --libvirt-type qemu 
+  shell: source /home/stack/stackrc && openstack overcloud deploy --stack overcloud --templates -e /home/stack/templates/network-isolation.yaml -e /home/stack/templates/network-environment.yaml --control-scale {{ control_scale }}  --compute-scale {{ compute_scale }} --compute-flavor compute --control-flavor control --ntp-server {{ NTP_IP }} --libvirt-type qemu 
